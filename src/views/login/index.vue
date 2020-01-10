@@ -24,6 +24,8 @@
 
 <script>
 import { login, getSmsCode } from '@/api/user'
+import { validate } from 'vee-validate'
+
 export default {
   name: 'LoginPage',
   data () {
@@ -67,6 +69,8 @@ export default {
       try {
         const res = await login(user)
         console.log(res)
+        const { data } = res
+        this.$store.commit('setUser', data.data)
         this.$toast.success('登陆成功')
       } catch (err) {
         console.log(err)
@@ -78,6 +82,20 @@ export default {
       // 验证手机号是否有效
       try {
         const { mobile } = this.user
+        // 参数1：要验证的数据
+        // 参数2：验证规则
+        // 参数3：一个可选的配置对象，例如配置错误消息字段名称 name
+        // 返回值：{ valid, errors, ... }
+        //          valid: 验证是否成功，成功 true，失败 false
+        //          errors：一个数组，错误提示消息
+        const validateResult = await validate(mobile, 'required|mobile', {
+          name: '手机号'
+        })
+        // 验证失败，提示错误信息，停止发送验证码
+        if (!validateResult.valid) {
+          this.$toast(validateResult.errors[0])
+          return
+        }
         // 请求发送短信验证码
         const res = await getSmsCode(mobile)
         console.log(res)
@@ -85,6 +103,7 @@ export default {
         this.isCountAndDown = true
       } catch (err) {
         console.log(err)
+        this.isCountAndDown = false
         this.$toast('请勿频繁操作')
       }
     }

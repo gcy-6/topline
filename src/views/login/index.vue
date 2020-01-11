@@ -15,7 +15,7 @@
         </ValidationProvider>
         <!-- </van-cell-group> -->
     </ValidationObserver>
-    <div class="btn">
+    <div class="btn" @click="$router.push('/')">
         <van-button type="info" @click="userLogin">登录</van-button>
     </div>
 

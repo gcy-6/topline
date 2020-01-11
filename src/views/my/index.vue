@@ -60,7 +60,7 @@
       <van-cell title="小智同学" is-link />
     </van-cell-group>
 
-    <van-cell-group v-if="$store.state.user">
+    <van-cell-group v-if="$store.state.user" @click="onLogout">
       <van-cell
         style="text-align: center;"
         title="退出登录"
@@ -81,6 +81,7 @@ export default {
     }
   },
   methods: {
+    // 获取当前登录用户信息
     async loadUser () {
       try {
         const { data } = await getUserInfo()
@@ -90,7 +91,16 @@ export default {
         console.log(error)
         this.$toast('获取数据失败')
       }
+    },
+    // 用户退出登录
+    async onLogout () {
+      await this.$dialog.confirm({
+        title: '退出登录',
+        message: '您确定要退出?'
+      })
+      this.$store.commit('setUser', null)
     }
+
   },
   created () {
     if (this.$store.state.user) {

@@ -1,27 +1,27 @@
 <template>
   <div class="user-container">
-    <van-nav-bar title="黑马头条" left-arrow icon="arrow-left" />
+    <van-nav-bar :title="user.name" left-arrow icon="arrow-left" />
     <div class="user-info">
         <van-row>
             <van-col :span="6" style="margin:14px">
-                <van-image width="100" height="100" src="https://img.yzcdn.cn/vant/cat.jpeg" round/>
+                <van-image width="100" height="100" :src="user.photo" round/>
             </van-col>
             <van-col :span="16">
-                <van-row style="font-size:16px;margin:15px 5px">
+                <van-row style="font-size:16px;margin:15px 5px;text-align:center">
                     <van-col :span="6">
-                        <div>123</div>
+                        <div>{{user.art_count}}</div>
                         <div>发布</div>
                     </van-col>
                     <van-col :span="6">
-                        <div>123</div>
+                        <div>{{user.follow_count}}</div>
                         <div>关注</div>
                     </van-col>
                     <van-col :span="6">
-                        <div>256</div>
+                        <div>{{user.fans_count}}</div>
                         <div>粉丝</div>
                     </van-col>
                     <van-col :span="6">
-                        <div>246</div>
+                        <div>{{user.like_count}}</div>
                         <div>获赞</div>
                     </van-col>
                 </van-row>
@@ -36,8 +36,8 @@
             </van-col>
         </van-row>
         <van-row style="font-size:16px">
-            <div>hhh</div>
-            <div>hhh</div>
+            <div>{{user.certi}}</div>
+            <div>{{user.intro}}</div>
         </van-row>
     </div>
     <!-- 文章列表 -->
@@ -45,10 +45,26 @@
 </template>
 
 <script>
+import { getUserById } from '@/api/user'
 export default {
-  name: 'UserPage'
+  name: 'UserPage',
+  data () {
+    return {
+      user: {}
+    }
+  },
+  methods: {
+    async loadUser () {
+      const { data } = await getUserById(this.$route.params.userId)
+      console.log(data)
+      this.user = data.data
+    }
+  },
+  created () {
+    this.loadUser()
+  }
 }
 </script>
 
-<style>
+<style lang='less' scoped>
 </style>

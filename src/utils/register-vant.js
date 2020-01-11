@@ -13,7 +13,10 @@ import {
   Grid,
   GridItem,
   Cell,
-  Dialog
+  Dialog,
+  Row,
+  Col,
+  List
 } from 'vant'
 
 Vue.use(Button)
@@ -31,3 +34,6 @@ Vue.use(Button)
   .use(Icon)
   .use(Cell)
   .use(Dialog)
+  .use(Row)
+  .use(Col)
+  .use(List)

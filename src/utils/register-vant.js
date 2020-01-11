@@ -6,7 +6,13 @@ import {
   Field,
   CountDown,
   Toast,
-  CellGroup
+  CellGroup,
+  Tabbar,
+  TabbarItem,
+  Image,
+  Grid,
+  GridItem,
+  Cell
 } from 'vant'
 
 Vue.use(Button)
@@ -16,3 +22,10 @@ Vue.use(Button)
   .use(CountDown)
   .use(Toast)
   .use(CellGroup)
+  .use(Tabbar)
+  .use(TabbarItem)
+  .use(Image)
+  .use(Grid)
+  .use(GridItem)
+  .use(Icon)
+  .use(Cell)

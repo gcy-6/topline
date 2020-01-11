@@ -9,6 +9,33 @@ const routes = [
     name: 'LoginPage',
     path: '/login',
     component: () => import('@/views/login')
+  },
+  {
+    path: '/',
+    name: 'tabbar',
+    component: () => import('@/views/tab-bar'),
+    children: [
+      {
+        path: '',
+        name: 'home',
+        component: () => import('@/views/home')
+      },
+      {
+        path: 'qa',
+        name: 'qa',
+        component: () => import('@/views/questionAndAnswer')
+      },
+      {
+        path: 'video',
+        name: 'video',
+        component: () => import('@/views/video')
+      },
+      {
+        path: 'my',
+        name: 'my',
+        component: () => import('@/views/my')
+      }
+    ]
   }
 ]
 

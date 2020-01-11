@@ -2,7 +2,7 @@
   <div class="tabbar-container">
     <router-view />
     <!-- 底部标签栏 -->
-    <van-tabbar>
+    <van-tabbar v-model="active">
       <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="question-o" to="/qa">问答</van-tabbar-item>
       <van-tabbar-item icon="video-o" to="/video">视频</van-tabbar-item>
@@ -13,7 +13,12 @@
 
 <script>
 export default {
-  name: 'tabbarPage'
+  name: 'tabbarPage',
+  data () {
+    return {
+      active: 0
+    }
+  }
 }
 </script>
 

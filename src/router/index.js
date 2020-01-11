@@ -12,7 +12,6 @@ const routes = [
   },
   {
     path: '/',
-    name: 'tabbar',
     component: () => import('@/views/tab-bar'),
     children: [
       {
@@ -36,6 +35,11 @@ const routes = [
         component: () => import('@/views/my')
       }
     ]
+  },
+  {
+    path: '/user/:userId',
+    name: 'user',
+    component: () => import('@/views/user')
   }
 ]
 

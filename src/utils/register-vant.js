@@ -16,7 +16,9 @@ import {
   Dialog,
   Row,
   Col,
-  List
+  List,
+  Tab,
+  Tabs
 } from 'vant'
 
 Vue.use(Button)
@@ -37,3 +39,5 @@ Vue.use(Button)
   .use(Row)
   .use(Col)
   .use(List)
+  .use(Tab)
+  .use(Tabs)

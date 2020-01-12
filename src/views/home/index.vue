@@ -23,23 +23,27 @@
     </van-tabs>
 
     <van-popup
-  v-model="isChannelEditShow"
-  position="bottom"
-  closeable
-  close-icon-position="top-left"
-  :style="{ height: '100%' }"
-/>
+      v-model="isChannelEditShow"
+      position="bottom"
+      closeable
+      close-icon-position="top-left"
+      :style="{ height: '100%' }"
+    >
+    <channel-edit />
+    </van-popup>
   </div>
 </template>
 
 <script>
 import { getUserChannels } from '@/api/channel'
 import ArticleList from './components/article-list'
+import ChannelEdit from './components/channel-edit'
 
 export default {
   name: 'homePage',
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
   },
   data () {
     return {

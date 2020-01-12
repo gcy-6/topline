@@ -1,11 +1,13 @@
 <template>
   <div class="article-list">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
     <!-- <h2>{{channel.name}}</h2> -->
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <van-cell v-for="(item,index) in list"
       :key="index"
       :title="item.title" />
     </van-list>
+      </van-pull-refresh>
   </div>
 </template>
 
@@ -26,7 +28,8 @@ export default {
       list: [], // 列表数据
       loading: false,
       finished: false,
-      timestamp: null
+      timestamp: null,
+      isLoading: false
     }
   },
   computed: {},
@@ -41,20 +44,29 @@ export default {
         timestamp: this.timestamp || Date.now(),
         with_top: 1
       })
-      //   console.log(data)
+      // 2、把请求获取到的数据添加到数组列表中
       const { results } = data.data
-      this.list.push(...results)
+      //   console.log(results)
+      this.list.unshift(...results)
+      // 3、加载状态结束
       this.loading = false
+      // 4、数据全部加载完成
       if (results.length) {
-        // 更新获取下一页数据的时间戳
         this.timestamp = data.data.pre_timestamp
       } else {
-        // 没有数据了，把 finished 设置为 true，不再加载更多
         this.finished = true
       }
-      // 2、把请求获取到的数据添加到数组列表中
-      // 3、加载状态结束
-      // 4、数据全部加载完成
+    },
+    async onRefresh () {
+      const { data } = await getChannelArticles({
+        channel_id: this.channel.id,
+        timestamp: Date.now(),
+        with_top: 1
+      })
+      const { results } = data.data
+      this.list.unshift(...results)
+      this.isLoading = false
+      this.$toast(`更新了${results.length}条数据`)
     }
   }
 }

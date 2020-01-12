@@ -18,7 +18,8 @@ import {
   Col,
   List,
   Tab,
-  Tabs
+  Tabs,
+  PullRefresh
 } from 'vant'
 
 Vue.use(Button)
@@ -41,3 +42,4 @@ Vue.use(Button)
   .use(List)
   .use(Tab)
   .use(Tabs)
+  .use(PullRefresh)

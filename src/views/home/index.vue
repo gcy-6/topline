@@ -4,6 +4,12 @@
     <van-nav-bar title="首页" fixed/>
     <!-- 标签栏 -->
     <van-tabs v-model="active">
+      <van-icon
+    class="wap-nav"
+    slot="nav-right"
+    name="wap-nav"
+    @click="isChannelEditShow = true"
+  />
       <van-tab
       v-for="(channels,index) in userChannels"
       :key="index"
@@ -15,6 +21,14 @@
       <van-tab title="标签 3">内容 3</van-tab>
       <van-tab title="标签 4">内容 4</van-tab> -->
     </van-tabs>
+
+    <van-popup
+  v-model="isChannelEditShow"
+  position="bottom"
+  closeable
+  close-icon-position="top-left"
+  :style="{ height: '100%' }"
+/>
   </div>
 </template>
 
@@ -30,7 +44,8 @@ export default {
   data () {
     return {
       active: 0,
-      userChannels: []
+      userChannels: [],
+      isChannelEditShow: true
     }
   },
   methods: {
@@ -57,6 +72,12 @@ export default {
   right: 0;
   z-index: 2
 }
+}
+.wap-nav {
+    position: fixed;
+    right: 0;
+    line-height: 44px;
+    background: #fff;
 }
 
 </style>

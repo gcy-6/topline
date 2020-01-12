@@ -19,7 +19,8 @@ import {
   List,
   Tab,
   Tabs,
-  PullRefresh
+  PullRefresh,
+  Popup
 } from 'vant'
 
 Vue.use(Button)
@@ -43,3 +44,4 @@ Vue.use(Button)
   .use(Tab)
   .use(Tabs)
   .use(PullRefresh)
+  .use(Popup)

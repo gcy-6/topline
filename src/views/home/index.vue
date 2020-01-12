@@ -5,11 +5,11 @@
     <!-- 标签栏 -->
     <van-tabs v-model="active">
       <van-tab
-      v-for="(channel,index) in userChannels"
+      v-for="(channels,index) in userChannels"
       :key="index"
-      :title="channel.name">
+      :title="channels.name">
       <!-- {{channel.name}} -->
-       <article-list :channel="channel" />
+       <article-list :channel="channels" />
       </van-tab>
       <!-- <van-tab title="标签 2">内容 2</van-tab>
       <van-tab title="标签 3">内容 3</van-tab>

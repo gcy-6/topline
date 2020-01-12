@@ -8,3 +8,12 @@ export const getArticlesByUser = (userId, params) => {
     params
   })
 }
+
+// 获取频道的文章列表
+export const getChannelArticles = params => {
+  return request({
+    method: 'get',
+    url: '/app/v1_1/articles',
+    params
+  })
+}

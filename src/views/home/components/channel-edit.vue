@@ -13,9 +13,15 @@
   <van-grid-item
     v-for="(channel,index) in userChannels"
     :key="channel.id"
-    :text="channel.name"
     @click="onUserChannelClick(index)"
   >
+  <span
+    slot="text"
+    class="text"
+    :class="{
+      active:index === active
+    }"
+  >{{channel.name}}</span>
     <van-icon slot="icon" name="close" v-show="isClose&&index!==0"></van-icon>
   </van-grid-item>
 </van-grid>
@@ -44,6 +50,10 @@ export default {
   props: {
     userChannels: {
       type: Array,
+      required: true
+    },
+    active: {
+      type: Number,
       required: true
     }
   },
@@ -98,5 +108,11 @@ export default {
     }
 }
 }
-
+.van-grid-item_text,.text {
+  font-size: 14px;
+  color: #222
+}
+.active {
+  color: red
+}
 </style>

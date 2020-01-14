@@ -29,7 +29,10 @@
       close-icon-position="top-left"
       :style="{ height: '100%' }"
     >
-    <channel-edit :user-channels="userChannels" />
+    <channel-edit
+      :user-channels="userChannels"
+      @switch="onChannelSwitch"
+    />
     </van-popup>
   </div>
 </template>
@@ -57,6 +60,10 @@ export default {
       const { data } = await getUserChannels()
       console.log(data)
       this.userChannels = data.data.channels
+    },
+    onChannelSwitch (index) {
+      this.active = index
+      this.isChannelEditShow = false
     }
   },
   created () {

@@ -14,6 +14,7 @@
     v-for="(channel,index) in userChannels"
     :key="channel.id"
     :text="channel.name"
+    @click="onUserChannelClick(index)"
   >
     <van-icon slot="icon" name="close" v-show="isClose&&index!==0"></van-icon>
   </van-grid-item>
@@ -65,6 +66,15 @@ export default {
     },
     onAdd (channel) {
       this.userChannels.push(channel)
+    },
+    onUserChannelClick (index) {
+      // 如果是编辑状态，就会删除频道
+      if (this.isClose && index !== 0) {
+        this.userChannels.splice(index, 1)
+      } else {
+        // 如果是非编辑状态，则执行切换频道操作
+        this.$emit('switch', index)
+      }
     }
   },
   created () {

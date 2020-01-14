@@ -1,14 +1,22 @@
 <template>
   <div class="channel-edit">
       <van-cell title="我的频道" :border="false">
-          <van-button size="mini" round type="danger" plain>编辑</van-button>
+          <van-button
+            size="mini"
+            round
+            type="danger"
+            plain
+            @click="isClose=!isClose"
+          >{{isClose?'完成':'编辑'}}</van-button>
       </van-cell>
       <van-grid :gutter="10">
   <van-grid-item
-    v-for="channel in userChannels"
+    v-for="(channel,index) in userChannels"
     :key="channel.id"
     :text="channel.name"
-  />
+  >
+    <van-icon slot="icon" name="close" v-show="isClose&&index!==0"></van-icon>
+  </van-grid-item>
 </van-grid>
 <van-cell title="推荐频道" :border="false"></van-cell>
 <van-grid :gutter="10">
@@ -28,7 +36,8 @@ export default {
   name: 'ChannelEdit',
   data () {
     return {
-      allChannels: []
+      allChannels: [],
+      isClose: false
     }
   },
   props: {
@@ -68,4 +77,16 @@ export default {
 .channel-edit {
     padding:40px 0;
 }
+.van-grid-item{
+  position: relative;
+  /deep/.van-grid-item__icon-wrapper {
+    position: absolute;
+    top: -14px;
+    right: -4px;
+    .van-icon-close{
+      font-size: 16px
+    }
+}
+}
+
 </style>

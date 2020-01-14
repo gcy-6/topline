@@ -39,6 +39,7 @@
 
 <script>
 import { getAllChannels } from '@/api/channel'
+import { setItem } from '@/utils/storage'
 export default {
   name: 'ChannelEdit',
   data () {
@@ -89,6 +90,11 @@ export default {
   },
   created () {
     this.onLoadChannels()
+  },
+  watch: {
+    userChannels () {
+      setItem('user-channel', this.userChannels)
+    }
   }
 }
 </script>

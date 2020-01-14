@@ -42,6 +42,7 @@
 import { getUserChannels } from '@/api/channel'
 import ArticleList from './components/article-list'
 import ChannelEdit from './components/channel-edit'
+import { getItem } from '@/utils/storage'
 
 export default {
   name: 'homePage',
@@ -58,9 +59,22 @@ export default {
   },
   methods: {
     async onLoad () {
-      const { data } = await getUserChannels()
-      console.log(data)
-      this.userChannels = data.data.channels
+      try {
+        let channels = []
+        const localChannels = getItem('user-channel')
+        if (localChannels) {
+          channels = localChannels
+        } else {
+          const { data } = await getUserChannels()
+          console.log(data)
+          this.userChannels = data.data.channels
+          channels = this.userChannels
+        }
+        this.userChannels = channels
+      } catch (error) {
+        console.log(error)
+        this.toast('获取数据失败')
+      }
     },
     onChannelSwitch (index) {
       this.active = index

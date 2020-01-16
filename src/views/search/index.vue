@@ -7,7 +7,7 @@
         placeholder="请输入搜索关键词"
         show-action
         background="#3296fa"
-        @search="onSearch"
+        @search="onSearch(searchContent)"
         @cancel="onCancel"
         @focus="isResultShow=false"
         @input="onSearchInput"
@@ -21,7 +21,12 @@
 
     <!-- 联想建议 -->
     <van-cell-group v-else-if="searchContent">
-      <van-cell icon="search" v-for="(item,index) in getSuggestions" :key="index">
+      <van-cell
+        icon="search"
+        v-for="(item,index) in getSuggestions"
+        :key="index"
+        @click="onSearch(item)"
+      >
         <div slot="title" v-html="highlight(item)"></div>
       </van-cell>
     </van-cell-group>
@@ -70,8 +75,9 @@ export default {
     }
   },
   methods: {
-    onSearch () {
-      console.log('onSearch')
+    onSearch (q) {
+      // console.log('onSearch')
+      this.searchContent = q
       this.isResultShow = true
     },
     onCancel () {

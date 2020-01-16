@@ -39,19 +39,7 @@
         &nbsp;&nbsp;&nbsp;
         <span>完成</span>
       </van-cell>
-      <van-cell title="单元格">
-        <van-icon name="close"></van-icon>
-      </van-cell>
-      <van-cell title="单元格">
-        <van-icon name="close"></van-icon>
-      </van-cell>
-      <van-cell title="单元格">
-        <van-icon name="close"></van-icon>
-      </van-cell>
-      <van-cell title="单元格">
-        <van-icon name="close"></van-icon>
-      </van-cell>
-      <van-cell title="单元格">
+      <van-cell :title="item" v-for="(item,index) in searchHistories" :key="index">
         <van-icon name="close"></van-icon>
       </van-cell>
     </van-cell-group>
@@ -71,13 +59,20 @@ export default {
     return {
       searchContent: '',
       isResultShow: false,
-      getSuggestions: []
+      getSuggestions: [],
+      searchHistories: []
     }
   },
   methods: {
     onSearch (q) {
       // console.log('onSearch')
       this.searchContent = q
+      const searchHistories = this.searchHistories
+      const index = searchHistories.indexOf(q)
+      if (index !== -1) {
+        searchHistories.splice(index)
+      }
+      searchHistories.unshift(q)
       this.isResultShow = true
     },
     onCancel () {

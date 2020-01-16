@@ -34,13 +34,15 @@
     <!-- 历史记录 -->
     <van-cell-group v-else>
       <van-cell title="历史记录">
-        <van-icon name="delete" />
-        <span>全部删除</span>
-        &nbsp;&nbsp;&nbsp;
-        <span>完成</span>
+        <template v-if="isSearchShow">
+          <span @click="searchHistories = []">全部删除</span>
+          &nbsp;&nbsp;&nbsp;
+          <span @click="isSearchShow=false">完成</span>
+        </template>
+        <van-icon v-else name="delete" @click="isSearchShow=true" />
       </van-cell>
-      <van-cell :title="item" v-for="(item,index) in searchHistories" :key="index">
-        <van-icon name="close"></van-icon>
+      <van-cell :title="item" v-for="(item,index) in searchHistories" :key="index" @click="onHistoryClick(item, index)">
+        <van-icon v-show="isSearchShow" name="close"></van-icon>
       </van-cell>
     </van-cell-group>
     <!-- /历史记录 -->
@@ -60,7 +62,8 @@ export default {
       searchContent: '',
       isResultShow: false,
       getSuggestions: [],
-      searchHistories: []
+      searchHistories: [],
+      isSearchShow: false
     }
   },
   methods: {
@@ -91,6 +94,15 @@ export default {
       const searchContent = this.searchContent
       const reg = new RegExp(searchContent, 'gi')
       return str.replace(reg, `<span style="color:#3296fa">${searchContent}</span>`)
+    },
+    onHistoryClick (item, index) {
+      // 如果是删除状态，则执行删除操作
+      if (this.isSearchShow) {
+        this.searchHistories.splice(index, 1)
+      } else {
+        // 否则执行搜索操作
+        this.onSearch(item)
+      }
     }
   }
 }

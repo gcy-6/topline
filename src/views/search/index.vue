@@ -16,12 +16,14 @@
     <!-- /搜索框 -->
 
     <!-- 搜索结果 -->
-    <search-result v-if="isResultShow" />
+    <search-result v-if="isResultShow" :q="searchContent" />
     <!-- /搜索结果 -->
 
     <!-- 联想建议 -->
     <van-cell-group v-else-if="searchContent">
-      <van-cell :title="item" icon="search" v-for="(item,index) in getSuggestions" :key="index" />
+      <van-cell icon="search" v-for="(item,index) in getSuggestions" :key="index">
+        <div slot="title" v-html="highlight(item)"></div>
+      </van-cell>
     </van-cell-group>
     <!-- /联想建议 -->
     <!-- 历史记录 -->
@@ -83,6 +85,11 @@ export default {
       const { data } = await getSuggestions(searchContent)
       console.log(data)
       this.getSuggestions = data.data.options
+    },
+    highlight (str) {
+      const searchContent = this.searchContent
+      const reg = new RegExp(searchContent, 'gi')
+      return str.replace(reg, `<span style="color:#3296fa">${searchContent}</span>`)
     }
   }
 }

@@ -52,6 +52,7 @@
 <script>
 import SearchResult from './components/search-result'
 import { getSuggestions } from '@/api/search'
+import { debounce } from 'lodash'
 export default {
   name: 'SearchPage',
   components: {
@@ -81,7 +82,7 @@ export default {
     onCancel () {
       console.log('onCancel')
     },
-    async onSearchInput () {
+    onSearchInput: debounce(async function () {
       const searchContent = this.searchContent
       if (!searchContent) {
         return
@@ -89,7 +90,16 @@ export default {
       const { data } = await getSuggestions(searchContent)
       console.log(data)
       this.getSuggestions = data.data.options
-    },
+    }, 300),
+    // async onSearchInput () {
+    //   const searchContent = this.searchContent
+    //   if (!searchContent) {
+    //     return
+    //   }
+    //   const { data } = await getSuggestions(searchContent)
+    //   console.log(data)
+    //   this.getSuggestions = data.data.options
+    // },
     highlight (str) {
       const searchContent = this.searchContent
       const reg = new RegExp(searchContent, 'gi')

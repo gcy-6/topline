@@ -53,6 +53,7 @@
 import SearchResult from './components/search-result'
 import { getSuggestions } from '@/api/search'
 import { debounce } from 'lodash'
+import { getItem, setItem } from '@/utils/storage'
 export default {
   name: 'SearchPage',
   components: {
@@ -63,8 +64,13 @@ export default {
       searchContent: '',
       isResultShow: false,
       getSuggestions: [],
-      searchHistories: [],
+      searchHistories: getItem('search-histories') || [],
       isSearchShow: false
+    }
+  },
+  watch: {
+    searchHistories (val) {
+      setItem('search-histories', val)
     }
   },
   methods: {

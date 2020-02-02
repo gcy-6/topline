@@ -11,6 +11,7 @@
 
     <!-- 加载中 -->
     <van-loading
+      v-if="loading"
       class="loading"
       color="#1989fa"
       vertical
@@ -20,7 +21,7 @@
     <!-- /加载中 -->
 
     <!-- 文章详情 -->
-    <div class="detail">
+    <div class="detail" v-else-if="article.title">
       <h3 class="title">{{article.title}}</h3>
       <div class="author-wrap">
         <div class="base-info">
@@ -42,13 +43,14 @@
     <!-- /文章详情 -->
 
     <!-- 加载失败提示 -->
-    <div class="error">
+    <div class="error" v-else>
       <img src="./no-network.png" alt="no-network">
       <p class="text">亲，网络不给力哦~</p>
       <van-button
         class="btn"
         type="default"
         size="small"
+        @click="loadArticle"
       >点击重试</van-button>
     </div>
     <!-- /加载失败提示 -->
@@ -68,7 +70,7 @@
       />
       <van-icon
         color="orange"
-        :name="article.is_collected ? 'star' : 'star-o'"
+        name="star"
       />
       <van-icon
         color="#e5645f"
@@ -93,7 +95,8 @@ export default {
   },
   data () {
     return {
-      article: {}
+      article: {},
+      loading: true
     }
   },
   computed: {},
@@ -104,12 +107,14 @@ export default {
   mounted () {},
   methods: {
     async loadArticle () {
+      this.loading = true
       try {
         const { data } = await getArticlesById(this.articleId)
         this.article = data.data
       } catch (err) {
         console.log(err)
       }
+      this.loading = false
     }
   }
 }
@@ -119,7 +124,7 @@ export default {
 @import "./github-markdown.css";
 
 .article-container {
-  padding: 46px 20px 50px;
+  padding: 46px 20px 100px;
   background: #fff;
   .loading {
     padding-top: 100px;

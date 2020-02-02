@@ -17,3 +17,11 @@ export const getChannelArticles = params => {
     params
   })
 }
+
+// 根据id获取指定的文章
+export const getArticlesById = articleId => {
+  return request({
+    method: 'get',
+    url: `/app/v1_0/articles/${articleId}`
+  })
+}

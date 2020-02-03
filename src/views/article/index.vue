@@ -75,7 +75,8 @@
       />
       <van-icon
         color="#e5645f"
-        name="good-job"
+        :name="article.attitude===1?'good-job':'good-job-o'"
+        @click="onLike"
       />
       <van-icon class="share-icon" name="share" />
     </div>
@@ -84,7 +85,13 @@
 </template>
 
 <script>
-import { getArticlesById, addCollect, deleteCollect } from '@/api/article'
+import {
+  getArticlesById,
+  addCollect,
+  deleteCollect,
+  addLike,
+  deleteLike
+} from '@/api/article'
 export default {
   name: 'ArticlePage',
   components: {},
@@ -132,6 +139,27 @@ export default {
           await addCollect(this.articleId)
           this.article.is_collected = true
           this.$toast.success('收藏成功')
+        }
+      } catch (error) {
+        console.log(error)
+        this.$toast.fail('操作失败')
+      }
+    },
+    async onLike () {
+      this.$toast.loading({
+        duration: 0,
+        message: '操作中...',
+        forbidClick: true
+      })
+      try {
+        if (this.article.attitude === 1) {
+          await deleteLike(this.articleId)
+          this.article.attitude = -1
+          this.$toast.success('取消点赞')
+        } else {
+          await addLike(this.articleId)
+          this.article.attitude = 1
+          this.$toast.success('点赞成功')
         }
       } catch (error) {
         console.log(error)
